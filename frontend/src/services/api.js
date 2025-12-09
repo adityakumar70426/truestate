@@ -7,7 +7,7 @@ export const fetchSales = async (params) => {
     }
   });
 
-  const url = `/api/sales?${searchParams.toString()}`;
+  const url = `https://truestate-xxeo.onrender.com/api/sales?${searchParams.toString()}`;
   console.log("Fetching from:", url);
 
   try {
