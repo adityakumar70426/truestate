@@ -4,12 +4,16 @@ import path from "path";
 import { fileURLToPath } from "url";
 import csv from "csv-parser";
 import Sale from "../models/Sale.js";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Force local MongoDB
-const MONGODB_URI = "mongodb://127.0.0.1:27017/truestate";
+// Use environment variable for MongoDB URI, fallback to local for development
+const MONGODB_URI = process.env.MONGODB_URI ;
+console.log(MONGODB_URI)
 const csvFilePath = path.resolve(__dirname, "../../data/sales.csv");
 
 // Insert in chunks to avoid out-of-memory

@@ -16,12 +16,11 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/sales", salesRouter);
-// const PORT = process.env.PORT || 4000;
-// // Force IPv4 local Mongo to avoid ::1 issues
-// const MONGODB_URI = "mongodb://127.0.0.1:27017/truestate";
-const PORT = 4000;
-const MONGODB_URI = "mongodb://127.0.0.1:27017/truestate";
 
+// Use environment variable for MongoDB URI, fallback to local for development
+const PORT = process.env.PORT || 4000;
+const MONGODB_URI = process.env.MONGODB_URI;
+console.log(MONGODB_URI);
 
 mongoose
   .connect(MONGODB_URI)
