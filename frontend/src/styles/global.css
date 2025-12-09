@@ -318,7 +318,67 @@ select.input {
   color: #991b1b;
 }
 
+.summary-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-box {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.summary-box:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-color);
+}
+
+.summary-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.summary-box-header h3 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-icon {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  cursor: help;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.info-icon:hover {
+  opacity: 1;
+}
+
+.summary-box-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
 @media (max-width: 1024px) {
+  .summary-boxes {
+    grid-template-columns: 1fr;
+  }
   .layout {
     grid-template-columns: 1fr;
   }
@@ -335,6 +395,10 @@ select.input {
   }
 
   .field-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-boxes {
     grid-template-columns: 1fr;
   }
 }

@@ -4,6 +4,7 @@ import FilterPanel from "./components/FilterPanel.jsx";
 import SortDropdown from "./components/SortDropdown.jsx";
 import Pagination from "./components/Pagination.jsx";
 import TransactionsTable from "./components/TransactionsTable.jsx";
+import SummaryBoxes from "./components/SummaryBoxes.jsx";
 import useSalesQuery from "./hooks/useSalesQuery.js";
 
 const App = () => {
@@ -43,6 +44,8 @@ const App = () => {
         </aside>
 
         <main className="content">
+          <SummaryBoxes aggregates={data?.aggregates} loading={loading} />
+          
           <div className="toolbar">
             <div className="card toolbar-card">
               <SortDropdown

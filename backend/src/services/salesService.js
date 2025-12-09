@@ -158,14 +158,51 @@ export const getSales = async (query) => {
   console.log("Pagination:", { page, limit, skip });
 
   // Run query
-  const [items, total] = await Promise.all([
+  const [items, total, aggregates] = await Promise.all([
     Sale.find(filter).sort(sort).skip(skip).limit(limit).lean(),
     Sale.countDocuments(filter),
+    // Calculate aggregates based on filtered data
+    Sale.aggregate([
+      { $match: filter },
+      {
+        $group: {
+          _id: null,
+          totalUnitsSold: { $sum: { $ifNull: ["$quantity", 0] } },
+          totalAmount: { $sum: { $ifNull: ["$finalAmount", 0] } },
+          totalDiscount: { 
+            $sum: { 
+              $ifNull: [
+                { $subtract: [{ $ifNull: ["$totalAmount", 0] }, { $ifNull: ["$finalAmount", 0] }] },
+                0
+              ]
+            }
+          }
+        }
+      }
+    ])
   ]);
 
   console.log(`Found ${total} total records, returning ${items.length} items`);
 
   const totalPages = Math.ceil(total / limit) || 1;
 
-  return { items, total, page, limit, totalPages };
+  // Extract aggregate values (default to 0 if no results)
+  const aggregateData = aggregates.length > 0 ? aggregates[0] : {
+    totalUnitsSold: 0,
+    totalAmount: 0,
+    totalDiscount: 0
+  };
+
+  return { 
+    items, 
+    total, 
+    page, 
+    limit, 
+    totalPages,
+    aggregates: {
+      totalUnitsSold: aggregateData.totalUnitsSold || 0,
+      totalAmount: aggregateData.totalAmount || 0,
+      totalDiscount: aggregateData.totalDiscount || 0
+    }
+  };
 };
