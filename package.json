@@ -1,0 +1,9 @@
+{
+  "name": "truestate-retail-sales-system",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run dev --workspace frontend",
+    "server": "npm run dev --workspace backend"
+  }
+}
